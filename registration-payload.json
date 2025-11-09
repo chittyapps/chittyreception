@@ -1,0 +1,96 @@
+{
+  "name": "chittyreception",
+  "description": "AI-powered answering and orchestration service for Chicago Furnished Condos. Sona AI concierge handles inbound/outbound calls and SMS with intelligent routing, business rule enforcement, and 24/7 availability via OpenPhone integration.",
+  "version": "1.0.0",
+  "endpoints": [
+    {
+      "path": "/health",
+      "method": "GET",
+      "description": "Health check endpoint - returns service status",
+      "authentication": false
+    },
+    {
+      "path": "/api/v1/status",
+      "method": "GET",
+      "description": "Service status endpoint with dependency health checks and metrics",
+      "authentication": false
+    },
+    {
+      "path": "/api/v1/send-message",
+      "method": "POST",
+      "description": "Send SMS message via OpenPhone",
+      "authentication": true
+    },
+    {
+      "path": "/api/v1/make-call",
+      "method": "POST",
+      "description": "Make outbound call via OpenPhone",
+      "authentication": true
+    },
+    {
+      "path": "/api/v1/calls",
+      "method": "GET",
+      "description": "Get call history from database",
+      "authentication": true
+    },
+    {
+      "path": "/api/v1/messages",
+      "method": "GET",
+      "description": "Get message history from database",
+      "authentication": true
+    },
+    {
+      "path": "/webhooks/openphone",
+      "method": "POST",
+      "description": "OpenPhone webhook handler for inbound calls and messages",
+      "authentication": false,
+      "notes": "Uses HMAC signature verification"
+    }
+  ],
+  "schema": {
+    "version": "1.0.0",
+    "entities": [
+      "reception_calls",
+      "reception_messages",
+      "reception_sessions",
+      "identity_phones"
+    ],
+    "relationships": [
+      "calls_to_identities",
+      "messages_to_identities",
+      "sessions_to_calls"
+    ]
+  },
+  "security": {
+    "authentication": "jwt",
+    "encryption": "https",
+    "webhooks": "hmac-sha256"
+  },
+  "capabilities": [
+    "inbound_calls",
+    "outbound_calls",
+    "inbound_sms",
+    "outbound_sms",
+    "ai_orchestration",
+    "booking_validation",
+    "emergency_routing",
+    "mcp_server"
+  ],
+  "dependencies": {
+    "chittyid": "https://id.chitty.cc",
+    "chittyauth": "https://auth.chitty.cc",
+    "chittyconnect": "https://connect.chitty.cc"
+  },
+  "infrastructure": {
+    "platform": "cloudflare_workers",
+    "database": "neon_postgresql",
+    "kv": "cloudflare_kv",
+    "durable_objects": "cloudflare_durable_objects"
+  },
+  "baseUrl": "https://chittyreception-production.ccorp.workers.dev",
+  "documentation": "https://docs.chitty.cc/reception",
+  "contact": {
+    "email": "support@chitty.cc",
+    "organization": "ChittyFoundation"
+  }
+}

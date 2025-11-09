@@ -22,6 +22,82 @@ api.get('/health', (c) => {
 });
 
 /**
+ * Service status endpoint (ChittyRegister requirement)
+ * Returns detailed service status, dependencies, and metrics
+ */
+api.get('/status', async (c) => {
+  const startTime = Date.now();
+
+  // Check database connectivity
+  let dbStatus = 'unknown';
+  let dbLatency = 0;
+  try {
+    const dbStart = Date.now();
+    const db = createDatabase(c.env);
+    await db.execute('SELECT 1', []);
+    dbLatency = Date.now() - dbStart;
+    dbStatus = 'healthy';
+  } catch (error) {
+    dbStatus = 'unhealthy';
+    console.error('Database health check failed:', error);
+  }
+
+  // Check OpenPhone connectivity
+  let openPhoneStatus = 'unknown';
+  try {
+    const client = new OpenPhoneClient({
+      apiKey: c.env.OPENPHONE_API_KEY,
+    });
+    // Simple connectivity check (doesn't make actual API call)
+    openPhoneStatus = c.env.OPENPHONE_API_KEY ? 'configured' : 'not_configured';
+  } catch (error) {
+    openPhoneStatus = 'error';
+    console.error('OpenPhone check failed:', error);
+  }
+
+  const responseTime = Date.now() - startTime;
+
+  return c.json({
+    success: true,
+    data: {
+      service: 'chittyreception',
+      version: '1.0.0',
+      status: dbStatus === 'healthy' ? 'operational' : 'degraded',
+      dependencies: {
+        database: {
+          status: dbStatus,
+          latency_ms: dbLatency,
+          provider: 'neon_postgresql',
+        },
+        openphone: {
+          status: openPhoneStatus,
+          provider: 'openphone_api',
+        },
+        chitty_services: {
+          chittyid: 'https://id.chitty.cc',
+          chittyauth: 'https://auth.chitty.cc',
+          chittyconnect: 'https://connect.chitty.cc',
+        },
+      },
+      capabilities: [
+        'inbound_calls',
+        'outbound_calls',
+        'inbound_sms',
+        'outbound_sms',
+        'ai_orchestration',
+        'booking_validation',
+        'emergency_routing',
+      ],
+      response_time_ms: responseTime,
+    },
+    metadata: {
+      timestamp: new Date().toISOString(),
+      environment: c.env.ENVIRONMENT || 'production',
+    },
+  });
+});
+
+/**
  * Send SMS via OpenPhone
  * Requires authentication
  */

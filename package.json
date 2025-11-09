@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
-    "build": "tsc && wrangler deploy --dry-run",
+    "build": "tsc",
+    "build:mcp": "tsc mcp-server.ts --outDir . --module nodenext --moduleResolution nodenext --target es2022 --esModuleInterop --skipLibCheck",
     "deploy:staging": "wrangler deploy --env staging",
     "deploy:production": "wrangler deploy --env production",
     "test": "vitest",
@@ -16,9 +17,11 @@
     "tail": "wrangler tail",
     "typecheck": "tsc --noEmit",
     "sync:dry": "DRY_RUN=true ts-node scripts/sync.ts",
-    "sync:live": "DRY_RUN=false ts-node scripts/sync.ts"
+    "sync:live": "DRY_RUN=false ts-node scripts/sync.ts",
+    "mcp": "node mcp-server.js"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.21.1",
     "@neondatabase/serverless": "^1.0.2",
     "@notionhq/client": "^5.3.0",
     "@octokit/graphql": "^9.0.3",

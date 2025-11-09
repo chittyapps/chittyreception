@@ -35,6 +35,7 @@ app.get('/', (c) => {
     description: 'ChittyOS answering and orchestration service',
     endpoints: {
       health: '/api/v1/health',
+      status: '/api/v1/status',
       sendMessage: 'POST /api/v1/send-message',
       makeCall: 'POST /api/v1/make-call',
       webhooks: 'POST /webhooks/openphone',

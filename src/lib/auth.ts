@@ -4,7 +4,7 @@
 import { Context, Next } from 'hono';
 import type { Env, HonoVariables, AuthContext } from '@/types/env';
 import { createDatabase, queries } from '@/lib/database';
-import { createHash } from 'crypto';
+import { createHash } from 'node:crypto';
 
 /**
  * Authentication middleware that validates Bearer tokens

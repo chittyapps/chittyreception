@@ -251,27 +251,70 @@ Authorization: Bearer {token}
 
 Webhooks use signature verification instead.
 
-## MCP Server
+## Claude Integration
 
-ChittyReception includes an MCP server for Claude Code integration:
+ChittyReception provides **three** Claude integration methods:
+
+### 1. MCP Server (Claude Desktop) - ✅ READY
 
 ```bash
-# Add to Claude Desktop config
+# Build the MCP server
+npm run build:mcp
+
+# Add to Claude Desktop config (~/Library/Application Support/Claude/claude_desktop_config.json)
 {
   "mcpServers": {
     "chittyreception": {
       "command": "node",
-      "args": ["path/to/chittyreception/mcp-server.js"]
+      "args": ["/Users/nb/Projects/development/chittyreception/mcp-server.js"],
+      "env": {
+        "OPENPHONE_API_KEY": "your_openphone_api_key",
+        "NEON_DATABASE_URL": "postgresql://..."
+      }
     }
   }
 }
 ```
 
-Available tools:
-- `send_sms` - Send SMS messages
+**Available Tools:**
+- `send_sms` - Send SMS messages via OpenPhone
 - `make_call` - Make outbound calls
-- `get_call_history` - Retrieve call records
-- `get_message_history` - Retrieve message records
+- `get_call_history` - Query call records with filters (phone, direction, limit)
+- `get_message_history` - Query message records with filters
+- `search_guest_by_phone` - Look up guest ChittyID and recent interactions
+- `get_conversation_context` - Get full chronological conversation timeline
+
+### 2. HTTP MCP Endpoint (Web/Mobile) - ✅ READY
+
+**Endpoint:** `https://chittyreception-production.ccorp.workers.dev/mcp`
+
+Authenticated HTTP endpoint for web-based Claude and Custom GPT Actions.
+
+```bash
+# List available tools (no auth required)
+curl https://chittyreception-production.ccorp.workers.dev/mcp/tools
+
+# Call a tool (auth required)
+curl -X POST https://chittyreception-production.ccorp.workers.dev/mcp \
+  -H "Authorization: Bearer {token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "method": "tools/call",
+    "params": {
+      "name": "get_call_history",
+      "arguments": {"limit": 10}
+    }
+  }'
+```
+
+### 3. Claude Skill (Marketplace) - 🚧 DESIGN PHASE
+
+Packaged skill for Claude Marketplace with OAuth flow and built-in UI.
+
+**Status:** Architecture designed (see CLAUDE_SKILL_DESIGN.md)
+**Timeline:** Q2 2025 target launch
+
+**📖 Complete Documentation:** See [CLAUDE_INTEGRATION.md](./CLAUDE_INTEGRATION.md) for full setup instructions, troubleshooting, examples, and skill design.
 
 ## Troubleshooting
 

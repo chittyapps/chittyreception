@@ -1,16 +1,19 @@
 // MCP endpoint for Claude Code integration
 
 import { Hono } from 'hono';
-import type { Env } from '@/types/env';
+import type { Env, HonoVariables } from '@/types/env';
 import { tools, handleToolCall } from '@/mcp/server';
+import { authenticate, optionalAuthenticate } from '@/lib/auth';
 
-const mcp = new Hono<{ Bindings: Env }>();
+const mcp = new Hono<{ Bindings: Env; Variables: HonoVariables }>();
 
 /**
  * MCP protocol endpoint
  * Implements Model Context Protocol for Claude integration
+ *
+ * Authentication: Required for tool calls, optional for tool listing
  */
-mcp.post('/', async (c) => {
+mcp.post('/', authenticate, async (c) => {
   try {
     const body = await c.req.json();
     const { method, params } = body;
@@ -69,11 +72,18 @@ mcp.post('/', async (c) => {
 
 /**
  * MCP tools list endpoint (REST-style access)
+ * No authentication required for tool listing (discovery)
  */
 mcp.get('/tools', (c) => {
   return c.json({
     success: true,
     tools,
+    metadata: {
+      totalTools: tools.length,
+      endpoint: '/mcp',
+      authRequired: true,
+      documentation: 'https://docs.chitty.cc/reception/mcp',
+    },
   });
 });
 
