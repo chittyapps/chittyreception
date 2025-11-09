@@ -1,0 +1,294 @@
+{
+  "company": {
+    "name": "Chicago Furnished Condos",
+    "phone": "+1-XXX-XXX-XXXX",
+    "email": "info@chicagofurnishedcondos.com",
+    "website": "https://chicagofurnishedcondos.com",
+    "service_areas": [
+      "River North",
+      "Loop",
+      "Gold Coast",
+      "Streeterville",
+      "West Loop",
+      "South Loop"
+    ]
+  },
+  "booking_policies": {
+    "minimum_stay": {
+      "days": 32,
+      "reason": "Chicago short-term rental compliance",
+      "exceptions": {
+        "vacancy_pressure": {
+          "enabled": true,
+          "min_days": 30,
+          "requires_approval": true
+        }
+      }
+    },
+    "rental_cycle": {
+      "standard_start": "first_of_month",
+      "standard_end": "last_of_month",
+      "mid_month_allowed": false,
+      "exceptions": {
+        "vacancy_pressure": true,
+        "extension_requests": true,
+        "early_checkout": {
+          "allowed": false,
+          "refund_policy": "prorated_with_30_day_notice"
+        }
+      }
+    },
+    "advance_booking": {
+      "minimum_notice_days": 7,
+      "maximum_advance_months": 12,
+      "same_day_not_allowed": true
+    },
+    "deposits": {
+      "security_deposit": {
+        "amount_type": "one_month_rent",
+        "refundable": true,
+        "refund_timeline_days": 30,
+        "deductions_allowed": [
+          "damage",
+          "excessive_cleaning",
+          "missing_items",
+          "unpaid_utilities"
+        ]
+      },
+      "first_month": {
+        "due": "at_booking",
+        "non_refundable_after": "7_days_before_move_in"
+      },
+      "last_month": {
+        "required": false,
+        "optional_for_stays_over_months": 6
+      }
+    }
+  },
+  "pricing": {
+    "structure": "monthly_rate",
+    "base_rates": {
+      "studio": {
+        "min": 2200,
+        "max": 2800,
+        "avg": 2500
+      },
+      "one_bedroom": {
+        "min": 2800,
+        "max": 3800,
+        "avg": 3200
+      },
+      "two_bedroom": {
+        "min": 3800,
+        "max": 5500,
+        "avg": 4500
+      },
+      "three_bedroom": {
+        "min": 5500,
+        "max": 8000,
+        "avg": 6500
+      }
+    },
+    "dynamic_pricing": {
+      "enabled": true,
+      "factors": [
+        "vacancy_rate",
+        "season",
+        "length_of_stay",
+        "market_demand",
+        "property_amenities"
+      ]
+    },
+    "discounts": {
+      "length_of_stay": {
+        "3_months": 5,
+        "6_months": 10,
+        "12_months": 15
+      },
+      "corporate": {
+        "multiple_units": 8,
+        "long_term_contract": 12
+      },
+      "early_booking": {
+        "60_days_advance": 3,
+        "90_days_advance": 5
+      }
+    }
+  },
+  "fees": {
+    "cleaning": {
+      "type": "one_time",
+      "studio": 150,
+      "one_bedroom": 200,
+      "two_bedroom": 275,
+      "three_bedroom": 350,
+      "charged_at": "checkout",
+      "waived_if_stay_over_months": 6
+    },
+    "utilities": {
+      "included_in_rent": true,
+      "cap_per_month": 150,
+      "excess_charges": "billed_separately",
+      "included": ["electricity", "gas", "water", "internet", "trash"]
+    },
+    "parking": {
+      "included": false,
+      "available": true,
+      "monthly_rate": 250,
+      "type": "garage_or_lot",
+      "guest_parking": "available_limited"
+    },
+    "pet_fees": {
+      "pet_deposit": 500,
+      "monthly_pet_rent": 75,
+      "maximum_pets": 2,
+      "weight_limit_lbs": 50,
+      "breed_restrictions": true,
+      "non_refundable_portion": 250
+    },
+    "late_payment": {
+      "grace_period_days": 5,
+      "late_fee": 75,
+      "additional_daily": 10,
+      "max_late_fee": 200
+    },
+    "admin_fees": {
+      "application_fee": 50,
+      "lease_preparation": 100,
+      "key_replacement": 150,
+      "lock_change": 300
+    }
+  },
+  "policies": {
+    "pets": {
+      "allowed": true,
+      "types": ["cats", "dogs"],
+      "restrictions": {
+        "max_weight": 50,
+        "max_count": 2,
+        "breed_restrictions": true,
+        "restricted_breeds": [
+          "Pit Bull",
+          "Rottweiler",
+          "Doberman",
+          "German Shepherd (case by case)"
+        ],
+        "documentation_required": [
+          "vaccination_records",
+          "pet_photos",
+          "vet_reference"
+        ]
+      },
+      "rules": [
+        "No pets left alone over 8 hours",
+        "Must be leashed in common areas",
+        "Owner responsible for all damage",
+        "Noise complaints may result in termination"
+      ]
+    },
+    "smoking": {
+      "allowed": false,
+      "applies_to": ["cigarettes", "cigars", "vaping", "marijuana"],
+      "violation_fee": 500,
+      "additional_cleaning": "charged_at_actual_cost"
+    },
+    "guests": {
+      "short_term_allowed": true,
+      "max_consecutive_nights": 7,
+      "max_occupants": "per_unit_capacity",
+      "overnight_guests_require": "advance_notice",
+      "long_term_guests": "require_lease_amendment"
+    },
+    "maintenance": {
+      "emergency_24_7": true,
+      "emergency_phone": "+1-XXX-XXX-XXXX",
+      "non_emergency_hours": "Mon-Fri 9am-6pm",
+      "response_time": {
+        "emergency": "immediate",
+        "urgent": "same_day",
+        "routine": "48_hours"
+      },
+      "tenant_responsibilities": [
+        "Light bulb replacement",
+        "Air filter changes (quarterly)",
+        "Battery replacement (smoke detectors)",
+        "Drain clogs (unless structural)"
+      ],
+      "emergency_categories": [
+        "No heat in winter (below 40°F)",
+        "No AC in summer (above 85°F)",
+        "Water leaks",
+        "Gas smell",
+        "Electrical hazards",
+        "Lock outs (fee applies)",
+        "Security issues"
+      ]
+    },
+    "cancellation": {
+      "before_move_in": {
+        "30_plus_days": "full_refund_minus_admin",
+        "15_to_29_days": "50_percent_refund",
+        "under_15_days": "no_refund"
+      },
+      "early_termination": {
+        "notice_required_days": 30,
+        "penalty": "forfeit_security_deposit",
+        "lease_buyout_option": "2_months_rent",
+        "exception_for": ["job_loss", "medical_emergency", "with_documentation"]
+      }
+    },
+    "check_in_out": {
+      "check_in_time": "3:00 PM",
+      "check_out_time": "11:00 AM",
+      "early_check_in": {
+        "available_if": "unit_ready",
+        "fee": 100
+      },
+      "late_check_out": {
+        "available_if": "no_same_day_turnover",
+        "fee": 100
+      },
+      "key_access": {
+        "method": "smart_locks",
+        "code_provided": "24_hours_before",
+        "physical_keys": "available_on_request"
+      }
+    },
+    "housekeeping": {
+      "included": false,
+      "available": true,
+      "frequency_options": ["weekly", "biweekly", "monthly", "one_time"],
+      "weekly_rate": {
+        "studio": 80,
+        "one_bedroom": 100,
+        "two_bedroom": 140,
+        "three_bedroom": 180
+      },
+      "included_for": "stays_over_6_months"
+    }
+  },
+  "corporate_policies": {
+    "minimum_units": 2,
+    "minimum_commitment_months": 6,
+    "invoicing": "net_30",
+    "payment_methods": ["ACH", "wire", "check", "corporate_card"],
+    "master_service_agreement": {
+      "required": true,
+      "terms": "negotiable",
+      "volume_discounts": true
+    },
+    "services_included": {
+      "dedicated_account_manager": true,
+      "priority_maintenance": true,
+      "flexible_terms": true,
+      "consolidated_billing": true,
+      "emergency_accommodation": "subject_to_availability"
+    }
+  },
+  "availability": {
+    "check_method": "api_call",
+    "real_time_updates": true,
+    "hold_duration_hours": 24,
+    "update_frequency": "real_time_or_15_minutes"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "chittyreception",
+  "version": "1.0.0",
+  "description": "ChittyOS answering and orchestration service with OpenPhone/Twilio integration",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "tsc && wrangler deploy --dry-run",
+    "deploy:staging": "wrangler deploy --env staging",
+    "deploy:production": "wrangler deploy --env production",
+    "test": "vitest",
+    "test:unit": "vitest run --reporter=verbose",
+    "test:integration": "vitest run --reporter=verbose --config vitest.integration.config.ts",
+    "test:watch": "vitest watch",
+    "tail": "wrangler tail",
+    "typecheck": "tsc --noEmit",
+    "sync:dry": "DRY_RUN=true ts-node scripts/sync.ts",
+    "sync:live": "DRY_RUN=false ts-node scripts/sync.ts"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
+    "@notionhq/client": "^5.3.0",
+    "@octokit/graphql": "^9.0.3",
+    "dotenv": "^17.2.3",
+    "hono": "^4.0.0",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240529.0",
+    "@types/node": "^24.10.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.0",
+    "vitest": "^4.0.7",
+    "wrangler": "^4.45.4"
+  }
+}

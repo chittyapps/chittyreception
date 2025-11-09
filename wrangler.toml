@@ -1,0 +1,44 @@
+name = "chittyreception"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+account_id = "0bc21e3a5a9de1a4cc843be9c3e98121"
+
+[build]
+command = "npm install && npm run build"
+
+# Workers AI binding for orchestration
+[ai]
+binding = "AI"
+
+# KV namespace for caching and session state
+[[kv_namespaces]]
+binding = "RECEPTION_KV"
+id = "6b7dea65eb98484385bf6e7ff67775c8"
+
+# Durable Object for call/message state management
+[[durable_objects.bindings]]
+name = "CALL_STATE"
+class_name = "CallState"
+script_name = "chittyreception"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["CallState"]
+
+# Environment-specific configuration
+[env.staging]
+name = "chittyreception-staging"
+vars = { ENVIRONMENT = "staging" }
+
+[[env.staging.kv_namespaces]]
+binding = "RECEPTION_KV"
+id = "6b7dea65eb98484385bf6e7ff67775c8"
+
+[env.production]
+name = "chittyreception-production"
+vars = { ENVIRONMENT = "production" }
+
+[[env.production.kv_namespaces]]
+binding = "RECEPTION_KV"
+id = "6b7dea65eb98484385bf6e7ff67775c8"
