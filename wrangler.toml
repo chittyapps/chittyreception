@@ -4,8 +4,9 @@ compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
 account_id = "0bc21e3a5a9de1a4cc843be9c3e98121"
 
-[build]
-command = "npm install && npm run build"
+# Build handled by pnpm in monorepo
+# [build]
+# command = "pnpm install && pnpm run build"
 
 # Workers AI binding for orchestration
 [ai]
@@ -30,15 +31,37 @@ new_classes = ["CallState"]
 [env.staging]
 name = "chittyreception-staging"
 vars = { ENVIRONMENT = "staging" }
+routes = [
+  { pattern = "reception-staging.chitty.cc/*", zone_name = "chitty.cc" }
+]
+
+[env.staging.ai]
+binding = "AI"
 
 [[env.staging.kv_namespaces]]
 binding = "RECEPTION_KV"
 id = "6b7dea65eb98484385bf6e7ff67775c8"
 
+[[env.staging.durable_objects.bindings]]
+name = "CALL_STATE"
+class_name = "CallState"
+script_name = "chittyreception-staging"
+
 [env.production]
 name = "chittyreception-production"
 vars = { ENVIRONMENT = "production" }
+routes = [
+  { pattern = "reception.chitty.cc/*", zone_name = "chitty.cc" }
+]
+
+[env.production.ai]
+binding = "AI"
 
 [[env.production.kv_namespaces]]
 binding = "RECEPTION_KV"
 id = "6b7dea65eb98484385bf6e7ff67775c8"
+
+[[env.production.durable_objects.bindings]]
+name = "CALL_STATE"
+class_name = "CallState"
+script_name = "chittyreception-production"
