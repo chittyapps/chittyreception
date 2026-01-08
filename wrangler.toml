@@ -31,6 +31,7 @@ new_classes = ["CallState"]
 [env.staging]
 name = "chittyreception-staging"
 vars = { ENVIRONMENT = "staging" }
+workers_dev = true
 routes = [
   { pattern = "reception-staging.chitty.cc/*", zone_name = "chitty.cc" }
 ]

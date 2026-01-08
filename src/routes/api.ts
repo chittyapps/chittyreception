@@ -98,6 +98,20 @@ api.get('/status', async (c) => {
 });
 
 /**
+ * Debug endpoint to check environment
+ * REMOVE AFTER DEBUGGING
+ */
+api.get('/debug-env', async (c) => {
+  return c.json({
+    hasNeonUrl: !!c.env.NEON_DATABASE_URL,
+    hasOpenPhoneKey: !!c.env.OPENPHONE_API_KEY,
+    hasJwtSecret: !!c.env.JWT_SECRET,
+    environment: c.env.ENVIRONMENT,
+    neonUrlLength: c.env.NEON_DATABASE_URL?.length || 0,
+  });
+});
+
+/**
  * Send SMS via OpenPhone
  * Requires authentication
  */

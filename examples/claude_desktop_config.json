@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "chittyreception": {
+      "command": "node",
+      "args": ["/Users/nb/Projects/development/chittyreception/mcp-server.js"],
+      "env": {
+        "OPENPHONE_API_KEY": "your_openphone_api_key",
+        "NEON_DATABASE_URL": "postgresql://user:pass@host/db"
+      }
+    }
+  }
+}

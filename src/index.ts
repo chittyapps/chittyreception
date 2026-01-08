@@ -27,6 +27,16 @@ app.route('/webhooks', webhooks);
 app.route('/mcp', mcp);
 app.route('/sona', sona);
 
+// Root health endpoint (required by ChittyRegister)
+app.get('/health', (c) => {
+  return c.json({
+    status: 'healthy',
+    service: 'chittyreception',
+    version: '1.0.0',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Root endpoint
 app.get('/', (c) => {
   return c.json({
@@ -34,7 +44,8 @@ app.get('/', (c) => {
     version: '1.0.0',
     description: 'ChittyOS answering and orchestration service',
     endpoints: {
-      health: '/api/v1/health',
+      health: '/health',
+      healthV1: '/api/v1/health',
       status: '/api/v1/status',
       sendMessage: 'POST /api/v1/send-message',
       makeCall: 'POST /api/v1/make-call',
