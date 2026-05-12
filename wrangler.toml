@@ -66,3 +66,18 @@ id = "6b7dea65eb98484385bf6e7ff67775c8"
 name = "CALL_STATE"
 class_name = "CallState"
 script_name = "chittyreception-production"
+
+[observability]
+enabled = true
+
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+invocation_logs = true
+destinations = ["chittytrack-logs"]
+
+[observability.traces]
+enabled = true
+head_sampling_rate = 1
+destinations = ["chittytrack-traces"]
+persist = false
